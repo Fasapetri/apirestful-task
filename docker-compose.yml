@@ -1,0 +1,47 @@
+services:
+  laravel:
+    build: ./api-restful-back-TaksV2
+    container_name: laravel_app
+    ports:
+      - "8000:80"
+    depends_on:
+      - postgres
+    volumes:
+      - ./api-restful-back-TaksV2:/var/www/html
+    environment:
+      APP_ENV: local
+      APP_DEBUG: true
+      APP_KEY: base64:generated-key
+      DB_CONNECTION: pgsql
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_DATABASE: tasks_db
+      DB_USERNAME: postgres
+      DB_PASSWORD: 1234
+
+  postgres:
+    image: postgres:15
+    container_name: postgres_db
+    restart: always
+    environment:
+      POSTGRES_DB: tasks_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  frontend:
+    build: ./api-restful-front-task
+    container_name: frontend_app
+    ports:
+      - "4200:4200" 
+    depends_on:
+      - laravel
+    volumes:
+      - ./api-restful-front-task:/app
+      - /app/node_modules
+
+volumes:
+  postgres_data:
