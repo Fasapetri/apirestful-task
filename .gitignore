@@ -1,0 +1,20 @@
+# Node.js
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Laravel
+vendor/
+storage/
+.env
+.env.local
+.env.production
+.env.testing
+database.sqlite
+
+# Docker
+**/docker-compose.override.yml
+**/.dockerignore
+**/logs/
+**/tmp/
+**/postgres_data/
